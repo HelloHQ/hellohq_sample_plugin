@@ -1,0 +1,40 @@
+# Test
+name: Build and upload binaries to release
+on:
+    push:
+      branches:
+        - "main"
+
+jobs:
+  build:
+    name: Publish binaries
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/cache@v3.0.11
+      with:
+        path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+        key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+      
+    - uses: actions-rs/toolchain@v1
+      with:
+         toolchain: stable
+         target: wasm32-wasi
+         override: true
+    
+    - name: Build  
+      run: cargo build --target wasm32-wasi --release
+
+    - name: Upload binaries to release
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: target/wasm32-wasi/release/wasm_plugin.wasm
+        asset_name: wasm_plugin.wasm
+        tag: ${{ github.ref }}
+        overwrite: true
+        body: "This is my release wasm module"
