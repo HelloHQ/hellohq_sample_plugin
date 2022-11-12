@@ -41,12 +41,19 @@ pub extern "C" fn construct_investable_portfolio() {
         .uri(&url)
         .header("Content-Type", "application/json");
 
-    let body = RequestBody {
-        assets: 3,
-        assets_prices: vec![10, 25, 500],
-        assets_weights: vec![0.05, 0.6, 0.35],
-        portfolio_value: 10000,
-    };
+    // let body = RequestBody {
+    //     assets: 3,
+    //     assets_prices: vec![10, 25, 500],
+    //     assets_weights: vec![0.05, 0.6, 0.35],
+    //     portfolio_value: 10000,
+    // };
+    let body: RequestBody = serde_json::from_reader(stdin())
+        .map_err(|e| {
+            eprintln!("ser: {e}");
+            e
+        })
+        .unwrap();
+
     let json_body = serde_json::to_string(&body)
         .map_err(|e| {
             eprintln!("de: {e}");
@@ -63,7 +70,6 @@ pub extern "C" fn construct_investable_portfolio() {
 
     let body = &res.body_read_all().unwrap();
     let str = std::str::from_utf8(body).unwrap().to_string();
-
 
     // println!("{:#?}", res.header_get("Content-Type".to_owned()));
     // println!("{:#?}", res.status_code);
