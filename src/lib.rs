@@ -4,6 +4,21 @@ use serde::{Deserialize, Serialize};
 use std::io::stdin;
 use wasi_experimental_http;
 
+
+// {
+//     "assets": 3,
+//     "assetsPrices": [
+//       10,
+//       25,
+//       500
+//     ],
+//     "assetsWeights": [
+//       0.05,
+//       0.6,
+//       0.35
+//     ],
+//     "portfolioValue": 10000
+// }
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct RequestBody {
     pub assets: u32,
@@ -41,12 +56,6 @@ pub extern "C" fn construct_investable_portfolio() {
         .uri(&url)
         .header("Content-Type", "application/json");
 
-    // let body = RequestBody {
-    //     assets: 3,
-    //     assets_prices: vec![10, 25, 500],
-    //     assets_weights: vec![0.05, 0.6, 0.35],
-    //     portfolio_value: 10000,
-    // };
     let body: RequestBody = serde_json::from_reader(stdin())
         .map_err(|e| {
             eprintln!("ser: {e}");
