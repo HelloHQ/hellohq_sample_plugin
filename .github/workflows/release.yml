@@ -1,9 +1,9 @@
 # Test
 name: Build and upload binaries to release
 on:
-    push:
-      branches:
-        - "main"
+  push:
+    branches:
+      - "main"
 
 jobs:
   backend:
@@ -11,59 +11,65 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    
-    - name: Cache
-      uses: actions/cache@v3.0.11
-      with:
-        path: |
+      - uses: actions/checkout@v3
+
+      - name: Cache
+        uses: actions/cache@v3.0.11
+        with:
+          path: |
             ~/.cargo/registry
             ~/.cargo/git
             target
-        key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-      
-    - name: Install toolchain
-      uses: actions-rs/toolchain@v1
-      with:
-         toolchain: stable
-         target: wasm32-wasi
-         override: true
-    
-    - name: Build  
-      run: cargo build --target wasm32-wasi --release
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 
-    - name: Upload binaries to release
-      uses: svenstaro/upload-release-action@v2
-      with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: target/wasm32-wasi/release/wasm_plugin.wasm
-        asset_name: wasm_plugin.wasm
-        tag: ${{ github.ref }}
-        overwrite: true
-        body: "Release wasm module"
-  
+      - name: Install toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          target: wasm32-wasi
+          override: true
+
+      - name: Build
+        run: cargo build --target wasm32-wasi --release
+
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: target/wasm32-wasi/release/wasm_plugin.wasm
+          asset_name: wasm_plugin.wasm
+          tag: ${{ github.ref }}
+          overwrite: true
+          body: "Release wasm module"
+
   frontend:
     name: Publish UI assets
     runs-on: ubuntu-latest
-    
-    steps:
-    - uses: actions/checkout@v3
-    
-    - name: Build
-      uses: actions/setup-node@v3
-      with:
-        node-version: 16
-        cache: 'npm'
-        cache-dependency-path: "./vanilla/package-lock.json"
-    - run: npm ci
-    - run: npm run build
 
-    - name: Upload binaries to release
-      uses: svenstaro/upload-release-action@v2
-      with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: vanilla/bin/*
-        file_glob: true
-        tag: ${{ github.ref }}
-        overwrite: true
-        body: "Release JS/HTML assets"
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: "npm"
+          cache-dependency-path: "./vanilla/package-lock.json"
+      - run: |
+          if [ -e yarn.lock ]; then
+          yarn install --frozen-lockfile
+          elif [ -e package-lock.json ]; then
+          npm ci
+          else
+          npm i
+          fi
+      - run: npm run build
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: vanilla/bin/*
+          file_glob: true
+          tag: ${{ github.ref }}
+          overwrite: true
+          body: "Release JS/HTML assets"
