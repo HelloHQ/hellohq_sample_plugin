@@ -45,6 +45,9 @@ jobs:
   frontend:
     name: Publish UI assets
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./vanilla
 
     steps:
       - uses: actions/checkout@v3
@@ -54,7 +57,8 @@ jobs:
         with:
           node-version: 16
           cache: "npm"
-          cache-dependency-path: "./vanilla/package-lock.json"
+          cache-dependency-path: "./package-lock.json"
+          
       - run: |
           if [ -e yarn.lock ]; then
           yarn install --frozen-lockfile
@@ -64,11 +68,12 @@ jobs:
           npm i
           fi
       - run: npm run build
+
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: vanilla/bin/*
+          file: bin/*
           file_glob: true
           tag: ${{ github.ref }}
           overwrite: true
