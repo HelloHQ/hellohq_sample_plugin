@@ -1,9 +1,12 @@
 # Rust WASM plugin 
 
-This repo is the plugin template for https://github.com/HelloHQ/core-app  
+This repo is the plugin template for HelloHQ app
 
-## Build
+## Usage
 
 ```bash
-cargo build --target wasm32-wasi
+cargo build --target wasm32-wasi #build
 ```
+
+## [UI](./vanilla/README.md)
+

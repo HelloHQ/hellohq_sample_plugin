@@ -1,4 +1,3 @@
-# Test
 name: Build and upload binaries to release
 on:
   push:
