@@ -6,7 +6,7 @@ on:
 
 jobs:
   backend:
-    name: Publish wasm binaries
+    name: Release wasm binaries
     runs-on: ubuntu-latest
 
     steps:
@@ -35,14 +35,14 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: target/wasm32-wasi/release/plugin_wasm.wasm
-          asset_name: plugin_wasm.wasm
+          file: target/wasm32-wasi/release/main.wasm
+          asset_name: main.wasm
           tag: ${{ github.ref }}
           overwrite: true
-          body: "Release wasm module"
+          body: "Override wasm module"
 
   frontend:
-    name: Publish UI assets
+    name: Release UI assets
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -79,4 +79,18 @@ jobs:
           file_glob: true
           tag: ${{ github.ref }}
           overwrite: true
-          body: "Release JS/HTML assets"
+          body: "Override JS/HTML assets"
+
+  manifest:
+    name: Release manifest
+    runs-on: ubuntu-latest
+    steps:
+      - name: Upload manifest to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: manifest.json
+          asset_name: manifest.json
+          tag: ${{ github.ref }}
+          overwrite: true
+          body: "Override manifest"
