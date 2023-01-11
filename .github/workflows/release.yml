@@ -35,8 +35,8 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: target/wasm32-wasi/release/wasm_plugin.wasm
-          asset_name: wasm_plugin.wasm
+          file: target/wasm32-wasi/release/*.wasm
+          asset_name: plugin_wasm.wasm
           tag: ${{ github.ref }}
           overwrite: true
           body: "Release wasm module"
