@@ -1,8 +1,8 @@
 name: Build and upload binaries to release
 on:
   push:
-    branches:
-      - "main"
+    tags:
+      - '*'
 
 jobs:
   backend:
@@ -61,7 +61,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
           cache-dependency-path: "**/package-lock.json"
-          
+
       - run: |
           if [ -e yarn.lock ]; then
           yarn install --frozen-lockfile
@@ -71,7 +71,6 @@ jobs:
           npm i
           fi
       - run: npm run build
-
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with:
