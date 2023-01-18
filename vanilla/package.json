@@ -1,34 +1,17 @@
 {
-  "name": "typescript-starter-npm",
+  "name": "simnple-plugin",
   "version": "1.0.0",
-  "description": "A very simple and basic Typescript Starter boilerplate template based on npm",
+  "description": "A very simple and basic Typescript Starter boilerplate template for HelloHQ plugin development",
   "author": "HelloHQ",
   "license": "MIT",
-  "keywords": [
-    "npm",
-    "scripts",
-    "watch",
-    "typescript",
-    "tsc",
-    "onchange"
-  ],
   "scripts": {
-    "start": "run-s watch",
-    "build": "run-s build:*",
-    "serve": "browser-sync start -s \"bin\" -f \"bin\"",
-    "build:clean": "rimraf bin",
-    "build:copy": "copyfiles -u 1 src/**/*.js src/**/*.html src/**/*.{png,jpg,gif} bin",
-    "build:tsc": "tsc",
-    "watch:tsc": "tsc -w",
-    "watch:assets": "onchange \"src/**/*.js\" \"src/**/*.html\" \"src/**/*.{png,jpg,gif}\" -- run-s build:copy",
-    "watch": "run-p build serve watch:*"
+    "dev": "parcel ./src/index.html",
+    "build": "parcel build ./src/index.html",
+    "lint": "tslint 'src/**/*.{ts,tsx}'"
   },
   "devDependencies": {
-    "browser-sync": "^2.27.11",
-    "copyfiles": "^2.4.1",
-    "npm-run-all": "^4.0.0",
-    "onchange": "^7.1.0",
-    "rimraf": "^3.0.2",
-    "typescript": "^4.9.4"
+    "parcel": "^2.8.2",
+    "typescript": "^4.9.4",
+    "tslint": "^6.1.3"
   }
 }
