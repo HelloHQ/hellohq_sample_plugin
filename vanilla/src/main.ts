@@ -1,7 +1,6 @@
-// webf.methodChannel.addMethodCallHandler("helloworld", (args) => {
-//   // expect(args).toEqual(['abc', 1234, null, /* undefined will be converted to */ null, [], true, false, {name: 1}]);
-//   return "from helloworld" + args[0];
-// });
+webf.methodChannel.addMethodCallHandler("callFromJs", (args) => {
+  return args[0];
+});
 
 const assetsInput = document.getElementById("assets-input") as HTMLInputElement;
 const pvalInput = document.getElementById("pval-input") as HTMLInputElement;
@@ -60,16 +59,13 @@ weightsInput?.addEventListener("change", (e) => {
 
 calculateButton?.addEventListener("click", async () => {
   showResults();
-  // //   let result = await webf.methodChannel.invokeMethod(
-  // //     "helloworld",
-  // //     "abc",
-  // //     1234,
-  // //     null,
-  // //     undefined,
-  // //     [],
-  // //     true,
-  // //     false,
-  // //     { name: 1 }
-  // //   );
-  //   results.innerHTML = JSON.stringify(result);
+  await webf.methodChannel.invokeMethod(
+    "callFromJs",
+    JSON.stringify({
+      assets,
+      assetsPrices: prices,
+      assetsWeights: weights,
+      portfolioValue: pVal,
+    })
+  );
 });
