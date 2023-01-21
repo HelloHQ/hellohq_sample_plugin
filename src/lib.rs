@@ -4,7 +4,6 @@ use serde::{Deserialize, Serialize};
 use std::io::stdin;
 use wasi_experimental_http;
 
-
 // {
 //     "assets": 3,
 //     "assetsPrices": [
@@ -56,19 +55,25 @@ pub extern "C" fn construct_investable_portfolio() {
         .uri(&url)
         .header("Content-Type", "application/json");
 
-    let body: RequestBody = serde_json::from_reader(stdin())
-        .map_err(|e| {
-            eprintln!("ser: {e}");
-            e
-        })
-        .unwrap();
+    let body: RequestBody = match serde_json::from_reader(stdin()).map_err(|e| {
+        eprintln!("ser: {e}");
+        e
+    }) {
+        Ok(val) => val,
+        Err(e) => {
+            panic!("Read input failed: {}", e);
+        }
+    };
 
-    let json_body = serde_json::to_string(&body)
-        .map_err(|e| {
-            eprintln!("de: {e}");
-            e
-        })
-        .unwrap();
+    let json_body = match serde_json::to_string(&body).map_err(|e| {
+        eprintln!("de: {e}");
+        e
+    }) {
+        Ok(val) => val,
+        Err(e) => {
+            panic!("Parse input to string failed: {}", e);
+        }
+    };
 
     println!("{}", &json_body);
 
