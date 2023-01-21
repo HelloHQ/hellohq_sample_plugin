@@ -14,6 +14,9 @@ const calculateButton = document.getElementById(
   "calculate-button"
 ) as HTMLInputElement;
 const results = document.getElementById("results") as HTMLInputElement;
+const nativeResults = document.getElementById(
+  "native-results"
+) as HTMLInputElement;
 
 let assets;
 let pVal;
@@ -59,7 +62,7 @@ weightsInput?.addEventListener("change", (e) => {
 
 calculateButton?.addEventListener("click", async () => {
   showResults();
-  await webf.methodChannel.invokeMethod(
+  let result = await webf.methodChannel.invokeMethod(
     "callFromJs",
     JSON.stringify({
       assets,
@@ -68,4 +71,7 @@ calculateButton?.addEventListener("click", async () => {
       portfolioValue: pVal,
     })
   );
+
+  console.log("native:", result);
+  nativeResults.innerHTML = JSON.stringify(result);
 });
