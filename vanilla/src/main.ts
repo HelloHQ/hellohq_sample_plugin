@@ -72,6 +72,5 @@ calculateButton?.addEventListener("click", async () => {
     })
   );
 
-  console.log("native:", result);
   nativeResults.innerHTML = JSON.stringify(result);
 });
