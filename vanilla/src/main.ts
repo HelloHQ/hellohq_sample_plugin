@@ -1,6 +1,6 @@
-import { hellohq } from "@hellohq/sdk";
+import { webf } from "@hellohq/sdk";
 
-hellohq.methodChannel.addMethodCallHandler("callFromJs", (args) => {
+webf.methodChannel.addMethodCallHandler("callFromJs", (args) => {
   return args[0];
 });
 
@@ -64,7 +64,7 @@ weightsInput?.addEventListener("change", (e) => {
 
 calculateButton?.addEventListener("click", async () => {
   showResults();
-  let result = await hellohq.methodChannel.invokeMethod(
+  let result = await webf.methodChannel.invokeMethod(
     "callFromJs",
     JSON.stringify({
       assets,
