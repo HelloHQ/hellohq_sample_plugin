@@ -58,7 +58,7 @@ jobs:
       - name: Build with Node ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 16.17.0
 
       - run: |
           if [ -e yarn.lock ]; then
