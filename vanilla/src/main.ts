@@ -1,4 +1,5 @@
-import { hellohq } from '@hellohq/sdk';
+import { hellohq } from "@hellohq/sdk";
+
 hellohq.methodChannel.addMethodCallHandler("callFromJs", (args) => {
   return args[0];
 });
