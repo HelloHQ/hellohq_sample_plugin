@@ -1,8 +1,8 @@
-// import { webf } from "@hellohq/sdk";
+import { webf } from "@hellohq/sdk";
 
-// webf.methodChannel.addMethodCallHandler("callFromJs", (args) => {
-//   return args[0];
-// });
+webf.methodChannel.addMethodCallHandler("callFromJs", (args) => {
+  return args[0];
+});
 
 const assetsInput = document.getElementById("assets-input") as HTMLInputElement;
 const pvalInput = document.getElementById("pval-input") as HTMLInputElement;
@@ -64,15 +64,15 @@ weightsInput?.addEventListener("change", (e) => {
 
 calculateButton?.addEventListener("click", async () => {
   showResults();
-  // let result = await webf.methodChannel.invokeMethod(
-  //   "callFromJs",
-  //   JSON.stringify({
-  //     assets,
-  //     assetsPrices: prices,
-  //     assetsWeights: weights,
-  //     portfolioValue: pVal,
-  //   })
-  // );
+  let result = await webf.methodChannel.invokeMethod(
+    "callFromJs",
+    JSON.stringify({
+      assets,
+      assetsPrices: prices,
+      assetsWeights: weights,
+      portfolioValue: pVal,
+    })
+  );
 
-  // nativeResults.innerHTML = JSON.stringify(result);
+  nativeResults.innerHTML = JSON.stringify(result);
 });
