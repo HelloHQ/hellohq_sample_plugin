@@ -7,7 +7,7 @@ on:
 jobs:
   backend:
     name: Release wasm binaries
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
       - uses: actions/checkout@v3
@@ -43,14 +43,14 @@ jobs:
 
   frontend:
     name: Release UI assets
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     defaults:
       run:
         working-directory: ./vanilla
 
     strategy:
       matrix:
-        node-version: [16.x]
+        node-version: [16.17.0]
 
     steps:
       - uses: actions/checkout@v3
@@ -58,7 +58,7 @@ jobs:
       - name: Build with Node ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
-          node-version: 16.17.0
+          node-version: ${{ matrix.node-version }}
 
       - run: |
           if [ -e yarn.lock ]; then
@@ -81,7 +81,7 @@ jobs:
 
   manifest:
     name: Release manifest
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
       - name: Upload manifest to release
