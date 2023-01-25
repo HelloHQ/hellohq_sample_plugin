@@ -60,14 +60,15 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - run: |
-          if [ -e yarn.lock ]; then
-          yarn install --frozen-lockfile
-          elif [ -e package-lock.json ]; then
-          npm ci
-          else
-          npm i
-          fi
+      - run: npm i
+      # |
+      #     if [ -e yarn.lock ]; then
+      #     yarn install --frozen-lockfile
+      #     elif [ -e package-lock.json ]; then
+      #     npm ci
+      #     else
+      #     npm i
+      #     fi
       - run: npm run build
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
