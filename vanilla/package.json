@@ -14,6 +14,7 @@
     "typescript": "^4.9.4"
   },
   "dependencies": {
+    "parcel": "^2.8.2",
     "@hellohq/sdk": "^0.0.3"
   }
 }
