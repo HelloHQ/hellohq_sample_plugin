@@ -68,7 +68,7 @@ jobs:
           else
           npm i
           fi
-      - run: npm run build
+      - run: npx parcel build ./src/index.html 
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with:
