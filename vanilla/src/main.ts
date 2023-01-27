@@ -1,8 +1,10 @@
+import { MethodCallHandlerResponse } from "@hellohq/sdk";
 webf.methodChannel.addMethodCallHandler("callFromJs", (args) => {
-  return {
+  const resp: MethodCallHandlerResponse = {
     fnName: "construct_investable_portfolio",
     serializedInput: args[0],
   };
+  return resp;
 });
 
 const assetsInput = document.getElementById("assets-input") as HTMLInputElement;
@@ -68,9 +70,9 @@ calculateButton?.addEventListener("click", async () => {
     "callFromJs",
     JSON.stringify({
       assets,
-      assetsPrices: prices,
-      assetsWeights: weights,
-      portfolioValue: pVal,
+      assets_prices: prices,
+      assets_weights: weights,
+      portfolio_value: pVal,
     })
   );
 
