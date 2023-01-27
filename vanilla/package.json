@@ -5,14 +5,22 @@
   "author": "HelloHQ",
   "license": "MIT",
   "scripts": {
-    "dev": "parcel ./src/index.html",
-    "build": "parcel build ./src/index.html"
+    "dev": "parcel",
+    "build": "parcel build"
+  },
+  "source": "src/index.html",
+  "targets": {
+    "default": {
+      "includeNodeModules": [
+        "@hellohq/sdk"
+      ]
+    }
   },
   "devDependencies": {
     "parcel": "^2.8.3",
     "typescript": "^4.9.4"
   },
   "dependencies": {
-    "@hellohq/sdk": "^0.0.3"
+    "@hellohq/sdk": "^0.0.7"
   }
 }

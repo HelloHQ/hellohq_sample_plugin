@@ -1,3 +1,1 @@
-import { WebF } from "@hellohq/sdk";
-
-declare const webf: WebF
+declare const webf: import("@hellohq/sdk").WebF;

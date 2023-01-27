@@ -1,16 +1,6 @@
-import { webf } from "@hellohq/sdk";
-
-// while(true) {
-//   if(webf) {
 webf.methodChannel.addMethodCallHandler("callFromJs", (args) => {
   return args[0];
 });
-//     break;
-//   } else{
-//     console.log("Continue loading...")
-//   }
-
-// }
 
 const assetsInput = document.getElementById("assets-input") as HTMLInputElement;
 const pvalInput = document.getElementById("pval-input") as HTMLInputElement;
@@ -71,7 +61,6 @@ weightsInput?.addEventListener("change", (e) => {
 });
 
 calculateButton?.addEventListener("click", async () => {
-  showResults();
   let result = await webf.methodChannel.invokeMethod(
     "callFromJs",
     JSON.stringify({
