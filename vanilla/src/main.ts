@@ -1,5 +1,8 @@
 webf.methodChannel.addMethodCallHandler("callFromJs", (args) => {
-  return args[0];
+  return {
+    fnName: "construct_investable_portfolio",
+    serializedInput: args[0],
+  };
 });
 
 const assetsInput = document.getElementById("assets-input") as HTMLInputElement;
@@ -20,8 +23,8 @@ const nativeResults = document.getElementById(
 
 let assets;
 let pVal;
-let prices: string[] = [];
-let weights: string[] = [];
+let prices: number[] = [];
+let weights: number[] = [];
 
 const showResults = () => {
   results.innerHTML = JSON.stringify({
@@ -33,18 +36,18 @@ const showResults = () => {
 };
 
 assetsInput?.addEventListener("change", (e) => {
-  assets = assetsInput.value;
+  assets = Number.parseFloat(assetsInput.value);
   showResults();
 });
 
 pvalInput?.addEventListener("change", (e) => {
-  pVal = pvalInput.value;
+  pVal = Number.parseFloat(pvalInput.value);
   showResults();
 });
 
 pricesInput?.addEventListener("change", (e) => {
   const price = pricesInput.value;
-  prices.push(price);
+  prices.push(Number.parseFloat(price));
   const span = document.createElement("span");
   span.textContent = price;
   pricesList.appendChild(span);
@@ -53,7 +56,7 @@ pricesInput?.addEventListener("change", (e) => {
 
 weightsInput?.addEventListener("change", (e) => {
   const weight = weightsInput.value;
-  weights.push(weight);
+  weights.push(Number.parseFloat(weight));
   const span = document.createElement("span");
   span.textContent = weight;
   weightsList.appendChild(span);
