@@ -6,8 +6,8 @@ This project includes 2 main parts: **the plugin's UI** & **the plugin's WASM mo
 This sample plugin depicts how plugin interacts with `hellohq` app:
 
 - Create an embedded UI that let `hellohq` users execute [financial algorithm to adjust user's portfolio](https://docs.portfoliooptimizer.io/index.html#post-/portfolio/construction/investable)
-- Create your [UI](vanilla/src/index.html) with frontend development experiment on browser using vanilla `HTML/JS/CSS`
-- Create your [API](vanilla/src/main.ts) to communicate with `hellohq` and your `WASM` APIs
+- Create your [UI](ui/src/index.html) with frontend development experiment on browser using vanilla `HTML/JS/CSS`
+- Create your [API](ui/src/main.ts) to communicate with `hellohq` and your `WASM` APIs
 - Create your [WASM APIs](src/lib.rs) to invoke [portfoliooptimizer API](https://api.portfoliooptimizer.io/v1/portfolio/construction/investable)
 
 ## The WASM module
@@ -19,7 +19,7 @@ This sample plugin depicts how plugin interacts with `hellohq` app:
 
 
 ## The UI
-- Develops as a single `html` page in `vanilla/src/index.html`
+- Develops as a single `html` page in `ui/src/index.html`
 - Exchange data with `hellohq` by using `webf` instance to invoke channel methods, types are defined by `@hellohq/sdk`
 
 
@@ -43,7 +43,7 @@ cargo 1.64.0
 cargo build --target wasm32-wasi #build
 ```
 
-### [To build UI](./vanilla/README.md)
+### [To build UI](./ui/README.md)
 
 ## Quick start guide for plugin developers
 
