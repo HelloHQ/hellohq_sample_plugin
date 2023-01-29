@@ -5,9 +5,12 @@ on:
       - '*'
 
 jobs:
-  backend:
+  wasm:
     name: Release wasm binaries
     runs-on: ubuntu-22.04
+    defaults:
+      run:
+        working-directory: ./wasm
 
     steps:
       - uses: actions/checkout@v3
@@ -35,18 +38,18 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: target/wasm32-wasi/release/main.wasm
+          file: wasm/target/wasm32-wasi/release/main.wasm
           asset_name: main.wasm
           tag: ${{ github.ref }}
           overwrite: true
           body: "Override wasm module"
 
-  frontend:
+  ui:
     name: Release UI assets
     runs-on: ubuntu-22.04
     defaults:
       run:
-        working-directory: ./vanilla
+        working-directory: ./ui
 
     strategy:
       matrix:
@@ -73,7 +76,7 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: vanilla/dist/**/*.{js,html}
+          file: ui/dist/**/*.{js,html}
           file_glob: true
           tag: ${{ github.ref }}
           overwrite: true
