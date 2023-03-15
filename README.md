@@ -40,6 +40,8 @@ cargo 1.64.0
 ### To build WASM
 
 ```bash
+rustup target add wasm32-wasi
+
 cargo build --target wasm32-wasi #build
 ```
 
